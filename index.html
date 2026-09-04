@@ -10,13 +10,25 @@
 <meta name="theme-color" content="#FBF7F0">
 <meta name="build" content="v5-simple">
 <style>
-/* Nothing newer than CSS 2.1. No variables, no flexbox, no grid, no clamp(),
-   no external fonts, no images, no web requests at all. */
+/* No external fonts, no images, no web requests at all - everything is inline SVG. */
 html,body{margin:0;padding:0}
 body{background:#FBF7F0;color:#1B2436;font-family:Georgia,"Times New Roman",Times,serif;
-     font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%}
-.wrap{max-width:660px;margin:0 auto;padding:34px 18px 0;text-align:center}
+     font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%;position:relative;overflow-x:hidden}
+.wrap{max-width:660px;margin:0 auto;padding:34px 18px 0;text-align:center;position:relative;z-index:1}
 img,svg{border:0;max-width:100%}
+
+/* corner garlands */
+.corner{position:absolute;width:190px;height:auto;pointer-events:none;z-index:0;opacity:.92}
+.corner-tl{top:0;left:0}
+.corner-tr{top:0;right:0;-webkit-transform:scaleX(-1);transform:scaleX(-1)}
+.corner-bl{bottom:0;left:0;-webkit-transform:scaleY(-1);transform:scaleY(-1)}
+.corner-br{bottom:0;right:0;-webkit-transform:scale(-1,-1);transform:scale(-1,-1)}
+@media screen and (max-width:700px){
+  .corner{width:120px}
+}
+@media screen and (max-width:460px){
+  .corner{width:86px;opacity:.85}
+}
 
 .eyebrow{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:3px;
          text-transform:uppercase;color:#B08D57;margin:0 0 16px}
@@ -27,8 +39,18 @@ h1 i{font-style:italic;color:#B08D57}
 .ar{font-family:Tahoma,Arial,sans-serif;direction:rtl}
 .arline{font-size:16px;color:#5A6579;margin:10px 0 0}
 
-.rule{width:60%;height:1px;background:#E0CFAE;margin:32px auto;font-size:0;line-height:0}
+.rule{margin:32px auto;font-size:0;line-height:0;text-align:center}
+.rule i{display:inline-block;width:56px;height:1px;background:#E0CFAE;vertical-align:middle;font-style:normal}
+.rule svg{width:46px;height:37px;vertical-align:middle;margin:0 10px}
 .dot{color:#B08D57;font-size:15px;letter-spacing:6px;margin:26px 0}
+
+/* florals */
+.florals{margin:0 0 14px;font-size:0}
+.florals svg{width:62px;height:50px;vertical-align:middle;margin:0 24px}
+.sprig-l{-webkit-transform:scaleX(-1);transform:scaleX(-1)}
+.foot .sprig{display:block;margin:0 auto 16px;width:40px;height:32px}
+.h-florals{margin:0 0 4px;font-size:0}
+.h-florals svg{width:34px;height:27px;vertical-align:middle;margin:0 12px}
 
 /* countdown */
 .cd{margin:26px 0 30px;font-size:0}
@@ -48,8 +70,10 @@ a.gh{background:transparent;color:#1B2436;border:1px solid #B4BAC5}
 .people{margin:34px 0 0;font-size:0}
 .people span{display:inline-block;vertical-align:bottom;margin:0 8px}
 .people svg{width:100%;height:auto;display:block}
-.p1{width:104px}.p2{width:96px}
-.k1{width:118px}.k2{width:110px}
+.p1{width:94px}.p2{width:120px}
+.k1{width:104px}.k2{width:126px}
+.people span.p1{margin-right:-16px}
+.people span.p2{margin-left:-16px}
 .floor{width:78%;max-width:400px;height:1px;background:#CFC7B8;margin:0 auto;font-size:0;line-height:0}
 .tags{margin:12px 0 0;font-size:0}
 .tags span{display:inline-block;width:120px;margin:0 8px;font-family:Arial,Helvetica,sans-serif;
@@ -72,7 +96,7 @@ p.s{margin:0;font-size:15px;color:#5A6579}
 
 /* arabic block */
 .arbox{background:#F4EEE2;border-top:1px solid #E0CFAE;border-bottom:1px solid #E0CFAE;
-       margin:36px 0 0;padding:30px 16px}
+       margin:36px 0 0;padding:30px 16px;position:relative;z-index:1}
 
 /* footer */
 .foot{margin:34px 0 0;padding:26px 0 40px;border-top:1px solid #E6DFD2}
@@ -85,24 +109,103 @@ p.s{margin:0;font-size:15px;color:#5A6579}
   .cards div{width:100%;margin:6px 0}
   .cd div{width:62px;margin:0 2px 8px}
   .cd b{font-size:23px}
-  .p1{width:82px}.p2{width:76px}.k1{width:94px}.k2{width:88px}
+  .p1{width:72px}.p2{width:92px}.k1{width:80px}.k2{width:100px}
   .tags span{width:94px}
 }
 
 /* Optional sparkle. Old browsers ignore all of it and show the art standing still. */
-@-webkit-keyframes bz{0%,100%{-webkit-transform:translateY(0)}50%{-webkit-transform:translateY(-3px)}}
-@keyframes bz{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-@-webkit-keyframes bk{0%,92%,100%{-webkit-transform:scaleY(1)}96%{-webkit-transform:scaleY(.08)}}
-@keyframes bk{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
-.breath{-webkit-animation:bz 4.6s ease-in-out infinite;animation:bz 4.6s ease-in-out infinite}
-.p2 .breath,.k2 .breath{-webkit-animation-duration:5.4s;animation-duration:5.4s}
-.eyes{-webkit-animation:bk 5s ease-in-out 1.5s infinite;animation:bk 5s ease-in-out 1.5s infinite}
-.p2 .eyes,.k2 .eyes{-webkit-animation-duration:6s;animation-duration:6s}
+@-webkit-keyframes bz{0%,100%{-webkit-transform:translateY(0) scale(1,.99)}50%{-webkit-transform:translateY(-4px) scale(1.015,1.02)}}
+@keyframes bz{0%,100%{transform:translateY(0) scale(1,.99)}50%{transform:translateY(-4px) scale(1.015,1.02)}}
+@-webkit-keyframes bk{0%,89%,100%{-webkit-transform:scaleY(1)}92%{-webkit-transform:scaleY(.55)}94%{-webkit-transform:scaleY(.06)}96.5%{-webkit-transform:scaleY(.6)}}
+@keyframes bk{0%,89%,100%{transform:scaleY(1)}92%{transform:scaleY(.55)}94%{transform:scaleY(.06)}96.5%{transform:scaleY(.6)}}
+@-webkit-keyframes swA{0%,100%{-webkit-transform:rotate(0)}50%{-webkit-transform:rotate(1.4deg)}}
+@keyframes swA{0%,100%{transform:rotate(0)}50%{transform:rotate(1.4deg)}}
+@-webkit-keyframes swB{0%,100%{-webkit-transform:rotate(0)}50%{-webkit-transform:rotate(-1.4deg)}}
+@keyframes swB{0%,100%{transform:rotate(0)}50%{transform:rotate(-1.4deg)}}
+@-webkit-keyframes lk{0%,100%{-webkit-transform:translateX(0)}50%{-webkit-transform:translateX(1.2px)}}
+@keyframes lk{0%,100%{transform:translateX(0)}50%{transform:translateX(1.2px)}}
+@-webkit-keyframes dance{0%,100%{-webkit-transform:translateX(-7px) rotate(-1.6deg)}50%{-webkit-transform:translateX(7px) rotate(1.6deg)}}
+@keyframes dance{0%,100%{transform:translateX(-7px) rotate(-1.6deg)}50%{transform:translateX(7px) rotate(1.6deg)}}
+@-webkit-keyframes armHoldA{0%,100%{-webkit-transform:rotate(-40deg)}50%{-webkit-transform:rotate(-48deg)}}
+@keyframes armHoldA{0%,100%{transform:rotate(-40deg)}50%{transform:rotate(-48deg)}}
+@-webkit-keyframes armHoldB{0%,100%{-webkit-transform:rotate(40deg)}50%{-webkit-transform:rotate(48deg)}}
+@keyframes armHoldB{0%,100%{transform:rotate(40deg)}50%{transform:rotate(48deg)}}
+@-webkit-keyframes armRestA{0%,100%{-webkit-transform:rotate(-6deg)}50%{-webkit-transform:rotate(2deg)}}
+@keyframes armRestA{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(2deg)}}
+@-webkit-keyframes armRestB{0%,100%{-webkit-transform:rotate(6deg)}50%{-webkit-transform:rotate(-2deg)}}
+@keyframes armRestB{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-2deg)}}
+.breath{-webkit-animation:bz 4.2s cubic-bezier(.37,0,.35,1) infinite;animation:bz 4.2s cubic-bezier(.37,0,.35,1) infinite}
+.p2 .breath,.k2 .breath{-webkit-animation-duration:4.8s;animation-duration:4.8s}
+.eyes{-webkit-animation:bk 4.4s ease-in-out 1.5s infinite;animation:bk 4.4s ease-in-out 1.5s infinite;-webkit-transform-origin:center;transform-origin:center}
+.p2 .eyes,.k2 .eyes{-webkit-animation-duration:5.2s;animation-duration:5.2s}
+.bobber{-webkit-transform-origin:50% 100%;transform-origin:50% 100%;
+        -webkit-animation:swA 4.6s ease-in-out infinite;animation:swA 4.6s ease-in-out infinite}
+.k2 .bobber{-webkit-animation-name:swB;animation-name:swB;
+            -webkit-animation-duration:5.3s;animation-duration:5.3s}
+.p2 .bobber{-webkit-animation-duration:4.6s;animation-duration:4.6s}
+.pupils{-webkit-animation:lk 7s ease-in-out infinite;animation:lk 7s ease-in-out infinite}
+.p2 .pupils,.k2 .pupils{-webkit-animation-duration:8s;animation-duration:8s}
+span.p1,span.p2{-webkit-animation:dance 6.5s ease-in-out infinite;animation:dance 6.5s ease-in-out infinite}
+.p1 .armA{-webkit-transform-box:fill-box;transform-box:fill-box;-webkit-transform-origin:50% 8%;transform-origin:50% 8%;
+          -webkit-animation:armHoldA 6.5s ease-in-out infinite;animation:armHoldA 6.5s ease-in-out infinite}
+.p2 .armB{-webkit-transform-box:fill-box;transform-box:fill-box;-webkit-transform-origin:50% 8%;transform-origin:50% 8%;
+          -webkit-animation:armHoldB 6.5s ease-in-out infinite;animation:armHoldB 6.5s ease-in-out infinite}
+.p1 .armB{-webkit-transform-box:fill-box;transform-box:fill-box;-webkit-transform-origin:50% 8%;transform-origin:50% 8%;
+          -webkit-animation:armRestA 6.5s ease-in-out infinite;animation:armRestA 6.5s ease-in-out infinite}
+.p2 .armA{-webkit-transform-box:fill-box;transform-box:fill-box;-webkit-transform-origin:50% 8%;transform-origin:50% 8%;
+          -webkit-animation:armRestB 6.5s ease-in-out infinite;animation:armRestB 6.5s ease-in-out infinite}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="sprig" viewBox="0 0 70 56">
+  <path d="M35,54 C33,40 36,28 39,16" stroke="#9CB48A" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M35,40 C26,37 20,29 22,21 C30,23 36,29 36,40 Z" fill="#9CB48A"/>
+  <path d="M39,30 C48,27 54,19 52,11 C44,13 39,20 39,30 Z" fill="#AFC499"/>
+  <g><circle cx="20" cy="16" r="6" fill="#F3C9D4"/><circle cx="13" cy="12" r="5" fill="#EFA9BC"/><circle cx="25" cy="9" r="4.6" fill="#EFA9BC"/><circle cx="17" cy="7" r="4.2" fill="#F6D8E1"/><circle cx="10" cy="18" r="4" fill="#E890A8"/><circle cx="22" cy="19" r="4.2" fill="#F6D8E1"/><circle cx="15" cy="21" r="3.8" fill="#EFA9BC"/><circle cx="18" cy="13" r="3.6" fill="#E890A8"/></g>
+  <g transform="translate(48,12)"><path d="M0,0 C-2,-8 -1,-13 0,-16 C1,-13 2,-8 0,0 Z" fill="#FBF3EE"/><path d="M0,0 C-8,-5 -12,-4 -15,-1 C-12,1 -6,2 0,0 Z" fill="#FBF3EE"/><path d="M0,0 C8,-5 12,-4 15,-1 C12,1 6,2 0,0 Z" fill="#FBF3EE"/><path d="M0,0 C-5,6 -5,11 -3,15 C-1,10 -1,5 0,0 Z" fill="#F6E4DC"/><path d="M0,0 C5,6 5,11 3,15 C1,10 1,5 0,0 Z" fill="#F6E4DC"/><circle cx="0" cy="0" r="2.2" fill="#E7B24E"/></g>
+</symbol>
+<symbol id="garland" viewBox="0 0 170 210">
+  <path d="M4,4 C40,26 46,64 34,96 C24,124 34,150 60,164" stroke="#8CA97C" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M4,4 C30,14 44,40 40,66" stroke="#9CB48A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".8"/>
+  <path d="M34,96 C18,90 6,74 10,58 C26,62 36,76 34,96 Z" fill="#8CA97C"/>
+  <path d="M40,66 C56,60 68,46 64,28 C48,32 38,48 40,66 Z" fill="#9CB48A"/>
+  <path d="M34,96 C48,100 62,94 66,80 C50,78 38,86 34,96 Z" fill="#7DA06E"/>
+  <path d="M60,164 C46,158 36,144 40,128 C54,132 62,148 60,164 Z" fill="#9CB48A"/>
+  <path d="M60,164 C74,168 86,162 90,148 C76,144 64,152 60,164 Z" fill="#8CA97C"/>
+  <g>
+    <circle cx="24" cy="30" r="13" fill="#F3C9D4"/><circle cx="8" cy="22" r="11" fill="#EFA9BC"/><circle cx="38" cy="16" r="10" fill="#EFA9BC"/>
+    <circle cx="20" cy="10" r="9.5" fill="#F6D8E1"/><circle cx="4" cy="34" r="9" fill="#E890A8"/><circle cx="34" cy="36" r="9.5" fill="#F6D8E1"/>
+    <circle cx="16" cy="42" r="9" fill="#EFA9BC"/><circle cx="16" cy="24" r="8" fill="#E890A8"/><circle cx="30" cy="24" r="7.5" fill="#FBE7EC"/><circle cx="42" cy="30" r="7" fill="#E890A8"/>
+  </g>
+  <g transform="translate(58,74)">
+    <path d="M0,0 C-4,-16 -2,-26 0,-32 C2,-26 4,-16 0,0 Z" fill="#FBF3EE"/>
+    <path d="M0,0 C-16,-10 -24,-8 -30,-2 C-24,2 -12,4 0,0 Z" fill="#FBF3EE"/>
+    <path d="M0,0 C16,-10 24,-8 30,-2 C24,2 12,4 0,0 Z" fill="#FBF3EE"/>
+    <path d="M0,0 C-10,12 -10,22 -6,30 C-2,20 -2,10 0,0 Z" fill="#F6E4DC"/>
+    <path d="M0,0 C10,12 10,22 6,30 C2,20 2,10 0,0 Z" fill="#F6E4DC"/>
+    <circle cx="0" cy="0" r="4.4" fill="#E7B24E"/>
+    <circle cx="-4" cy="3" r="1.4" fill="#B9812E"/><circle cx="4" cy="3" r="1.4" fill="#B9812E"/><circle cx="0" cy="-5" r="1.4" fill="#B9812E"/>
+  </g>
+  <g transform="translate(66,140)">
+    <circle cx="0" cy="0" r="8" fill="#F3C9D4"/><circle cx="-9" cy="-4" r="6.5" fill="#EFA9BC"/><circle cx="8" cy="-6" r="6" fill="#EFA9BC"/>
+    <circle cx="-3" cy="8" r="6" fill="#E890A8"/><circle cx="6" cy="6" r="5.5" fill="#F6D8E1"/>
+  </g>
+  <circle cx="46" cy="50" r="3.2" fill="#EFA9BC"/><circle cx="80" cy="120" r="3" fill="#F3C9D4"/>
+</symbol>
+</defs>
+</svg>
+<svg class="corner corner-tl" viewBox="0 0 170 210" aria-hidden="true"><use href="#garland"></use></svg>
+<svg class="corner corner-tr" viewBox="0 0 170 210" aria-hidden="true"><use href="#garland"></use></svg>
+<svg class="corner corner-bl" viewBox="0 0 170 210" aria-hidden="true"><use href="#garland"></use></svg>
+<svg class="corner corner-br" viewBox="0 0 170 210" aria-hidden="true"><use href="#garland"></use></svg>
 <div class="wrap">
 
+  <p class="florals" aria-hidden="true">
+    <svg class="sprig sprig-l"><use href="#sprig"></use></svg>
+    <svg class="sprig"><use href="#sprig"></use></svg>
+  </p>
   <p class="eyebrow">We are getting married</p>
   <h1>Ahmed <i>&amp;</i> Engy</h1>
   <p class="when">Monday 26 October 2026 &middot; 7:00 PM &middot; Cairo</p>
@@ -231,7 +334,7 @@ p.s{margin:0;font-size:15px;color:#5A6579}
   </div>
   <div class="floor">&nbsp;</div>
 
-  <div class="rule">&nbsp;</div>
+  <div class="rule" aria-hidden="true"><i></i><svg><use href="#sprig"></use></svg><i></i></div>
 
   <!-- <div class="sec">
     <h2>The day</h2>
@@ -248,16 +351,18 @@ p.s{margin:0;font-size:15px;color:#5A6579}
 
   <div class="sec">
     <h2>Finding us</h2>
+    <p class="h-florals" aria-hidden="true"><svg class="sprig-l"><use href="#sprig"></use></svg><svg><use href="#sprig"></use></svg></p>
     <h3>Location</h3>
     <p class="d">Pansy Hall</p>
     <p class="s">Engineering Authority House<br>Manshiyet El Bakri, Heliopolis, Cairo</p>
     <p><a class="btn" href="https://maps.app.goo.gl/moBh1W7fKGTYgLgaA">Open the map</a></p>
   </div>
 
-  <div class="rule">&nbsp;</div>
+  <div class="rule" aria-hidden="true"><i></i><svg><use href="#sprig"></use></svg><i></i></div>
 
   <div class="sec">
     <h2>A long time ago</h2>
+    <p class="h-florals" aria-hidden="true"><svg class="sprig-l"><use href="#sprig"></use></svg><svg><use href="#sprig"></use></svg></p>
     <h3>Long before all this</h3>
     <div class="people">
       <span class="k1"><svg class="toon kid kid-b" width="200" height="480" viewBox="0 0 200 480" aria-label="Engy as a child" preserveAspectRatio="xMidYMid meet">
@@ -422,6 +527,7 @@ p.s{margin:0;font-size:15px;color:#5A6579}
 
 <div class="wrap">
   <div class="foot">
+    <svg class="sprig" aria-hidden="true"><use href="#sprig"></use></svg>
     <em>#AhmedAndEngy2026</em>
     <p>Monday 26 October 2026 &middot; 7:00 PM<br>Pansy Hall &middot; Heliopolis, Cairo</p>
   </div>
